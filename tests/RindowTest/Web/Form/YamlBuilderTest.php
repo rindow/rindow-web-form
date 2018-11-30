@@ -60,7 +60,7 @@ class Test extends TestCase
 
     /**
      * @expectedException        Rindow\Web\Form\Exception\DomainException
-     * @expectedExceptionMessage Yaml load error or a class not found to build a form for
+     * @expectedExceptionMessage Yaml load error
      */
     public function testYamlError()
     {
