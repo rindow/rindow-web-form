@@ -1,0 +1,8 @@
+RindowTest\Web\Form\Builder\YamlBuilderTest\Normal:
+  attributes:
+    action: "/app/form"
+    method: post
+  properties:
+    email:
+      type: email
+      label: Email

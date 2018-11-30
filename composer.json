@@ -1,0 +1,44 @@
+{
+    "name": "rindow/rindow-web-form",
+    "type": "library",
+    "description": "Supports Web form",
+    "keywords": ["rindow","framework","web","form"],
+    "license": "BSD-3-Clause",
+    "require": {
+        "php": ">=5.3.3",
+        "interop-phpobjects/lenient-web": "*",
+        "interop-phpobjects/lenient-security": "*",
+        "rindow/rindow-stdlib": "*"
+    },
+    "require-dev": {
+        "rindow/rindow-stdlib": "*",
+        "rindow/rindow-container": "*",
+        "rindow/rindow-annotation": "*",
+        "rindow/rindow-validation": "*",
+        "rindow/rindow-module-yaml": "*"
+    },
+    "suggest": {
+        "rindow/rindow-container": "It needs some service container",
+        "rindow/rindow-annotation": "When using annotations",
+        "rindow/rindow-validation": "When using validation",
+        "rindow/rindow-module-yaml": "When using Yaml"
+    },
+    "autoload": {
+        "psr-0": {
+            "Rindow\\Web\\Form\\": "src/"
+        }
+    },
+
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://rindow.github.io/rindow-packagist/packages.json",
+            "options": {
+                "ssl": {
+                    "verify_peer": "true"
+                }
+            }
+        }
+    ],
+    "minimum-stability": "dev"
+}
