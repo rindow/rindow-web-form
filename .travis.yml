@@ -21,3 +21,5 @@ install:
 
 script: 
   - sh tests/travis/run-test.sh
+
+dist: trusty
