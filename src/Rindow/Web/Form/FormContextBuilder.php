@@ -1,7 +1,7 @@
 <?php
 namespace Rindow\Web\Form;
 
-use Rindow\Stdlib\Cache\CacheHandlerTemplate;
+use Rindow\Stdlib\Cache\ConfigCache\ConfigCacheFactory;
 /*use Rindow\Validation\Validator;*/
 /*use Rindow\Annotation\AnnotationReader;*/
 use Rindow\Web\Form\Builder\AnnotationBuilder;
@@ -16,7 +16,8 @@ class FormContextBuilder implements FormContextBuilderInterface
     const ARRAY_BUILDER = 'Rindow\\Web\\Form\\Builder\\ArrayBuilder';
     const YAML_BUILDER = 'Rindow\\Web\\Form\\Builder\\YamlBuilder';
 
-    protected $cacheHandler;
+    protected $configCacheFactory;
+    protected $formCache;
     protected $validator;
     protected $hydrator;
     protected $builders = array();
@@ -34,9 +35,13 @@ class FormContextBuilder implements FormContextBuilderInterface
         /*Validator*/ $validator=null,
         $hydrator=null,
         $serviceLocator=null,
-        /*AnnotationReader*/ $annotationReader=null)
+        /*AnnotationReader*/ $annotationReader=null,
+        $configCacheFactory=null)
     {
-        $this->cacheHandler = new CacheHandlerTemplate(__CLASS__);
+        if($configCacheFactory)
+            $this->configCacheFactory = $configCacheFactory;
+        else
+            $this->configCacheFactory = new ConfigCacheFactory(array('enableCache'=>false));
         $this->validator = $validator;
         $this->hydrator = $hydrator;
         $this->serviceLocator =$serviceLocator;
@@ -64,17 +69,10 @@ class FormContextBuilder implements FormContextBuilderInterface
 
     protected function getFormCache()
     {
-        return $this->cacheHandler->getCache('form');
-    }
-
-    public function setEnableCache($enableCache=true)
-    {
-        $this->cacheHandler->setEnableCache($enableCache);
-    }
-
-    public function setCachePath($cachePath)
-    {
-        $this->cacheHandler->setCachePath($cachePath);
+        if($this->formCache)
+            return $this->formCache;
+        $this->formCache = $this->configCacheFactory->create(__CLASS__);
+        return $this->formCache;
     }
 
     public function setConfig(array $config=null)
@@ -174,20 +172,20 @@ class FormContextBuilder implements FormContextBuilderInterface
         }
         $formCache = $this->getFormCache();
         $manager = $this;
-        $form = $formCache->get(
+        $form = $formCache->getEx(
             $className,
-            false,
-            function ($cache,$className,&$entry) use ($manager) {
-                $form = false;
+            function ($key,$args,&$save) {
+                list($className,$manager) = $args;
                 foreach($manager->getBuilders() as $builder) {
                     $form = $builder->build($className);
                     if($form) {
-                        $entry = $form;
-                        return true;
+                        return $form;
                     }
                 }
+                $save = false;
                 return false;
-            }
+            },
+            array($className,$this)
         );
         if(!$form)
             throw new Exception\DomainException('Form is not found for "'.$className.'"');

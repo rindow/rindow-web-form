@@ -24,6 +24,7 @@ class Module
                             'validator' => array('ref' => 'Rindow\\Validation\\DefaultValidator'),
                             'hydrator' => null,
                             'serviceLocator' => array('ref' => 'ServiceLocator'),
+                            'configCacheFactory' => array('ref' => 'ConfigCacheFactory'),
                         ),
                         'properties' => array(
                             'config' => array('config' => 'web::form'),

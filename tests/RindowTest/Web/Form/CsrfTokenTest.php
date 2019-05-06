@@ -2,7 +2,6 @@
 namespace RindowTest\Web\Form\CsrfTokenTest;
 
 use PHPUnit\Framework\TestCase;
-use Rindow\Stdlib\Cache\CacheFactory;
 use Rindow\Validation\Core\Validator;
 use Rindow\Annotation\AnnotationManager;
 
@@ -64,20 +63,14 @@ class Test extends TestCase
     public static function setUpBeforeClass()
     {
         self::$RINDOW_TEST_RESOURCES = __DIR__.'/../../resources';
-        CacheFactory::clearCache();
-        CacheFactory::clearFileCache(CacheFactory::$fileCachePath.'/cache/form');
     }
 
     public static function tearDownAfterClass()
     {
-        CacheFactory::clearFileCache(CacheFactory::$fileCachePath.'/cache/form');
     }
 
     public function setUp()
     {
-        usleep( RINDOW_TEST_CLEAR_CACHE_INTERVAL );
-        \Rindow\Stdlib\Cache\CacheFactory::clearCache();
-        usleep( RINDOW_TEST_CLEAR_CACHE_INTERVAL );
     }
 
     public function testValid()

@@ -2,7 +2,6 @@
 namespace RindowTest\Web\Form\FormBuilderTest;
 
 use PHPUnit\Framework\TestCase;
-use Rindow\Stdlib\Cache\CacheFactory;
 use Rindow\Stdlib\Entity\AbstractEntity;
 use Rindow\Container\ModuleManager;
 use Rindow\Validation\Core\Validator;
@@ -126,21 +125,14 @@ class Test extends TestCase
     public static function setUpBeforeClass()
     {
         self::$RINDOW_TEST_RESOURCES = __DIR__.'/../../../resources';
-        CacheFactory::clearCache();
-        CacheFactory::clearFileCache(CacheFactory::$fileCachePath.'/cache/form');
-        CacheFactory::clearFileCache(CacheFactory::$fileCachePath.'/cache/twig');
     }
 
     public static function tearDownAfterClass()
     {
-        CacheFactory::clearFileCache(CacheFactory::$fileCachePath.'/cache/form');
     }
 
     public function setUp()
     {
-        usleep( RINDOW_TEST_CLEAR_CACHE_INTERVAL );
-        \Rindow\Stdlib\Cache\CacheFactory::clearCache();
-        usleep( RINDOW_TEST_CLEAR_CACHE_INTERVAL );
     }
 
     public function testCloneNestedFormStructure()
@@ -303,6 +295,7 @@ EOT;
                     'Rindow\Stdlib\I18n\Module' => true,
                 ),
                 'annotation_manager' => true,
+                'enableCache'=>false,
             ),
             'container' => array(
                 'components' => array(
@@ -417,6 +410,7 @@ EOT;
                     'Rindow\Stdlib\I18n\Module' => true,
                 ),
                 'annotation_manager' => true,
+                'enableCache'=>false,
             ),
             'web' => array(
                 'form' => array(
@@ -491,6 +485,7 @@ EOT;
                     'Rindow\Validation\Module' => true,
                     'Rindow\Stdlib\I18n\Module' => true,
                 ),
+                'enableCache'=>false,
             ),
             'web' => array(
                 'form' => array(
@@ -553,6 +548,7 @@ EOT;
                     'Rindow\Stdlib\I18n\Module' => true,
                 ),
                 'annotation_manager' => true,
+                'enableCache'=>false,
             ),
             'web' => array(
                 'form' => array(
@@ -618,6 +614,7 @@ EOT;
                     'Rindow\Stdlib\I18n\Module' => true,
                 ),
                 'annotation_manager' => true,
+                'enableCache'=>false,
             ),
             'web' => array(
                 'form' => array(

@@ -2,7 +2,6 @@
 namespace RindowTest\Web\Form\FormTest;
 
 use PHPUnit\Framework\TestCase;
-use Rindow\Stdlib\Cache\CacheFactory;
 
 
 // Test Target Classes
@@ -33,13 +32,9 @@ class FormTest extends TestCase
 {
     public static function setUpBeforeClass()
     {
-        CacheFactory::clearCache();
-        CacheFactory::clearFileCache(CacheFactory::$fileCachePath.'/cache/form');
-        CacheFactory::clearFileCache(CacheFactory::$fileCachePath.'/cache/twig');
     }
     public static function tearDownAfterClass()
     {
-        CacheFactory::clearFileCache(CacheFactory::$fileCachePath.'/cache/form');
     }
 
     public function testText()
